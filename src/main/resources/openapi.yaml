@@ -1,0 +1,58 @@
+openapi: 3.0.3
+info:
+  title: Employee API
+  version: 1.0.0
+paths:
+  /employees/filter:
+    post:
+      summary: Filter employees
+      operationId: filterEmployees  # Add a meaningful operationId here
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/FilterEmployeesRequest'
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FilterEmployees200Response'
+
+components:
+  schemas:
+    Employee:
+      type: object
+      properties:
+        id:
+          type: integer
+        firstName:
+          type: string
+        lastName:
+          type: string
+        department:
+          type: string
+        salary:
+          type: number   # assuming salary is a number in JSON
+          format: double  # assuming salary might have decimals
+          example: 50000.00
+
+    FilterEmployeesRequest:
+      type: object
+      properties:
+        employees:
+          type: array
+          items:
+            $ref: '#/components/schemas/Employee'
+        secret:
+          type: string   # assuming secret is a string parameter
+
+    FilterEmployees200Response:
+      type: object
+      properties:
+        employees:
+          type: array
+          items:
+            $ref: '#/components/schemas/Employee'
